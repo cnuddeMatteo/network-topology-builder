@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Cloud, Shield, Router, Network, Monitor, Server, Save, Upload, Image as ImageIcon } from 'lucide-react';
+import { Cloud, Shield, Router, Network, Monitor, Server, Save, Upload, Image as ImageIcon, Wand2 } from 'lucide-react';
 
 export default function Sidebar({ onGenerate, onSave, onLoad, onExport }) {
   const [showModal, setShowModal] = useState(false);
   const [config, setConfig] = useState({ 
-      lans: 'Profs 192.168.10.0/24, Élèves 192.168.20.0/24', 
-      dmzs: 'Web 10.0.0.0/29', generatePCs: true, generateCloudFw: true, generateInfra: true, infraName: 'Siège Social'
+      lans: 'Admin 192.168.10.0/24 10, Utilisateurs 192.168.20.0/24 20', 
+      dmzs: 'Web 10.0.0.0/29 99', 
+      generatePCs: true, generateCloudFw: true, generateInfra: true, infraName: 'Siège Social'
   });
 
   const onDragStart = (event, nodeType, label) => {
@@ -18,9 +19,8 @@ export default function Sidebar({ onGenerate, onSave, onLoad, onExport }) {
   const toolBtnStyle = { flex: 1, padding: '10px', backgroundColor: '#374151', color: 'white', border: 'none', borderRadius: '6px', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px', fontSize: '11px', fontWeight: 'bold' };
 
   return (
-    <aside style={{ width: '300px', padding: '20px', backgroundColor: '#1f2937', color: '#f9fafb', borderRight: '1px solid #374151', display: 'flex', flexDirection: 'column', gap: '15px', boxShadow: '2px 0 10px rgba(0,0,0,0.3)', zIndex: 10, overflowY: 'auto' }}>
+    <aside style={{ width: '100%', height: '100%', padding: '20px', backgroundColor: '#1f2937', color: '#f9fafb', display: 'flex', flexDirection: 'column', gap: '15px', overflowY: 'auto', boxSizing: 'border-box' }}>
       
-      {/* 💾 OUTILS DE FICHIER */}
       <div style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
         <button onClick={onSave} style={toolBtnStyle} title="Sauvegarder (JSON)"><Save size={18} /> Sauver</button>
         <button onClick={() => document.getElementById('file-upload').click()} style={toolBtnStyle} title="Ouvrir (JSON)"><Upload size={18} /> Ouvrir</button>
@@ -32,7 +32,6 @@ export default function Sidebar({ onGenerate, onSave, onLoad, onExport }) {
 
       <div>
         <h3 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '10px', color: '#e5e7eb' }}>🛠️ Équipements</h3>
-        
         <div onDragStart={(e) => onDragStart(e, 'infraBox', 'Zone Infrastructure')} draggable style={{ padding: '10px', border: '2px dashed #9ca3af', borderRadius: '6px', marginBottom: '15px', cursor: 'grab', backgroundColor: '#374151', textAlign: 'center', fontWeight: 'bold' }}>🏢 Zone Infrastructure</div>
         
         <div onDragStart={(e) => onDragStart(e, 'custom', 'Cloud (Internet)')} draggable style={{ padding: '10px', border: '1px dashed #a8a29e', borderRadius: '6px', marginBottom: '8px', cursor: 'grab', backgroundColor: '#44403c', display: 'flex', alignItems: 'center', gap: '10px' }}><Cloud size={18} color="#a8a29e"/> Cloud</div>
@@ -45,15 +44,14 @@ export default function Sidebar({ onGenerate, onSave, onLoad, onExport }) {
 
       <hr style={{ borderColor: '#374151', margin: '10px 0' }} />
 
-      <button onClick={() => setShowModal(true)} style={{ width: '100%', padding: '12px', backgroundColor: '#8b5cf6', color: 'white', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold', transition: '0.2s', boxShadow: '0 4px 6px rgba(0,0,0,0.3)' }}>
-        ✨ Générateur Magique
+      <button onClick={() => setShowModal(true)} style={{ width: '100%', padding: '12px', backgroundColor: '#8b5cf6', color: 'white', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold', transition: '0.2s', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', boxShadow: '0 4px 6px rgba(0,0,0,0.3)' }}>
+        <Wand2 size={18} /> Générateur Magique
       </button>
 
-      {/* MODALE DU GÉNÉRATEUR (Inchangée) */}
       {showModal && (
         <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', backgroundColor: 'rgba(0,0,0,0.7)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 2000 }}>
           <div style={{ backgroundColor: '#1f2937', padding: '25px', borderRadius: '12px', border: '1px solid #4b5563', width: '480px', boxShadow: '0 15px 30px rgba(0,0,0,0.6)' }}>
-            <h3 style={{ margin: '0 0 20px 0', borderBottom: '1px solid #374151', paddingBottom: '10px', fontSize: '18px' }}>⚡ Configuration</h3>
+            <h3 style={{ margin: '0 0 20px 0', borderBottom: '1px solid #374151', paddingBottom: '10px', fontSize: '18px', display: 'flex', alignItems: 'center', gap: '8px' }}><Wand2 size={20} color="#8b5cf6"/> Configuration Magique</h3>
             
             <div style={{ background: '#111827', padding: '15px', borderRadius: '8px', border: '1px solid #374151', marginBottom: '20px' }}>
                 <label style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px', cursor: 'pointer', fontSize: '13px' }}>
@@ -70,8 +68,19 @@ export default function Sidebar({ onGenerate, onSave, onLoad, onExport }) {
                 </div>
             </div>
 
-            <div style={{ marginBottom: '15px' }}><div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}><span style={{fontSize: '12px', color: '#22c55e', fontWeight: 'bold'}}>Réseaux LAN</span></div><input type="text" value={config.lans} onChange={e => setConfig({...config, lans: e.target.value})} style={inputStyle} placeholder="Ex: Profs 192.168.10.0/24" /></div>
-            <div style={{ marginBottom: '15px' }}><div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}><span style={{fontSize: '12px', color: '#f97316', fontWeight: 'bold'}}>Zones DMZ</span></div><input type="text" value={config.dmzs} onChange={e => setConfig({...config, dmzs: e.target.value})} style={inputStyle} placeholder="Ex: Web 10.0.0.0/29" /></div>
+            <div style={{ marginBottom: '15px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
+                    <span style={{fontSize: '12px', color: '#22c55e', fontWeight: 'bold'}}>Réseaux LAN (Nom IP/CIDR VLAN)</span>
+                </div>
+                <input type="text" value={config.lans} onChange={e => setConfig({...config, lans: e.target.value})} style={inputStyle} placeholder="Ex: Profs 192.168.10.0/24 10" />
+            </div>
+            
+            <div style={{ marginBottom: '15px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
+                    <span style={{fontSize: '12px', color: '#f97316', fontWeight: 'bold'}}>Zones DMZ (Nom IP/CIDR VLAN)</span>
+                </div>
+                <input type="text" value={config.dmzs} onChange={e => setConfig({...config, dmzs: e.target.value})} style={inputStyle} placeholder="Ex: Web 10.0.0.0/29 99" />
+            </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '20px' }}>
                 <button onClick={() => { onGenerate(config, true); setShowModal(false); }} style={{ width: '100%', padding: '12px', background: '#10b981', border: 'none', color: 'white', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold' }}>➕ Ajouter aux réseaux existants</button>
