@@ -11,8 +11,8 @@ export default function Sidebar({ onGenerate, onSave, onLoad, onExport, onExport
       generateInfra: true, 
       infraName: 'Siège Social',
       networks: [
-          { id: 1, name: 'Profs', type: 'LAN', ip: '192.168.10.0', mask: '24', vlan: '10' },
-          { id: 2, name: 'Élèves', type: 'LAN', ip: '192.168.20.0', mask: '24', vlan: '20' },
+          { id: 1, name: 'Admin Info', type: 'LAN', ip: '192.168.10.0', mask: '24', vlan: '10' },
+          { id: 2, name: 'Marketing', type: 'LAN', ip: '192.168.20.0', mask: '24', vlan: '20' },
           { id: 3, name: 'Web', type: 'DMZ', ip: '10.0.0.0', mask: '29', vlan: '99' }
       ]
   });
